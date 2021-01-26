@@ -142,15 +142,13 @@ async def consumer_handler(websocket, path):
 
 def threaded_function():
     try:
-        samplerate = 44100
-
         def callback(outdata, frames, time, status):
             if status:
                 print(status, file=sys.stderr)
 
             # print(channels)
 
-            a = float(samplerate)/10000
+            a = float(44100)/10000
 
             wave_array = []
             wave_array += [[-1.0]] * int(a*4)
@@ -172,7 +170,7 @@ def threaded_function():
             stuff = np.array(list)
             outdata[:] = stuff
 
-        with sd.OutputStream(device=1, channels=1, callback=callback, samplerate=samplerate, blocksize=992):
+        with sd.OutputStream(device=1, channels=1, callback=callback, samplerate=44100, blocksize=992):
             input()
     except KeyboardInterrupt:
         parser.exit('Exited')
